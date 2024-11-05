@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Estudio Print</title>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <h1>Estudio Print</h1>
+            <img src="Logo.png" alt="Logo Estudio Print" class="logo">
+        </div>
+        <nav>
+            <ul>
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="servicios.html">Servicios</a></li>
+                <li><a href="contacto.html">Contacto</a></li>
+                <li><a href="sobre.html">Sobre Nosotros</a></li>
+            </ul>
+        </nav>
+    </header>
+    
+    <!-- Resto del contenido sigue igual -->
+</body>
+</html>
+    
+    <main>
+        <section id="galeria">
+            <div class="gallery-container">
+                <div class="mySlides">
+                    <img src="imagen1.jpg" alt="Imagen 1">
+                </div>
+                <div class="mySlides">
+                    <img src="imagen2.jpg" alt="Imagen 2">
+                </div>
+                <div class="mySlides">
+                    <img src="imagen3.jpg" alt="Imagen 3">
+                </div>
+                <div class="mySlides">
+                    <img src="imagen4.jpg" alt="Imagen 4">
+                </div>
+            </div>
+        </section>
+
+        <div class="welcome-button" onclick="window.location.href='#bienvenida'">Bienvenida</div>
+
+        <section id="bienvenida">
+            <h2>Bienvenido a Estudio Print</h2>
+            <p>Nos enorgullece ofrecer servicios de calidad, meticulosamente diseñados para satisfacer todas tus necesidades documentales. Nuestro equipo está aquí para asistirte en cada paso del camino, asegurando que obtengas la atención y el soporte que mereces. Explora nuestras secciones y descubre cómo podemos ayudarte a alcanzar tus objetivos con eficiencia y excelencia.</p>
+        </section>
+
+        <section id="video-section">
+            <h2>Vídeo de Marketing</h2>
+            <div class="video-container">
+                <video controls>
+                    <source src="PUBLICIDAD.mp4" type="video/mp4">
+                    Tu navegador no soporta la reproducción de videos.
+                </video>
+            </div>
+        </section>
+    </main>
+    
+    <footer>
+        <p>&copy; 2024 Estudio Print. Todos los derechos reservados.</p>
+    </footer>
+
+    <script>
+        let slideIndex = 0;
+        showSlides();
+
+        function showSlides() {
+            let slides = document.getElementsByClassName("mySlides");
+            for (let i = 0; i < slides.length; i++) {
+                slides[i].style.display = "none";  
+            }
+            slideIndex++;
+            if (slideIndex > slides.length) {slideIndex = 1}    
+            slides[slideIndex - 1].style.display = "block";  
+            setTimeout(showSlides, 3000); // Cambia cada 3 segundos
+        }
+    </script>
+</body>
+</html>
