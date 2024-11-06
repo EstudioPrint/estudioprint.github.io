@@ -1,4 +1,4 @@
-/* Estilos generales aplicables a todos los dispositivos */
+/* Estilos generales */
 * {
     margin: 0;
     padding: 0;
@@ -6,22 +6,25 @@
 }
 
 body {
-    font-family: 'Arial', sans-serif;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     line-height: 1.6;
     background-color: #fffbf2;
     color: #333;
     transition: background-color 0.3s, color 0.3s;
+    font-size: 16px;
 }
 
+/* Estilo del encabezado */
 header {
     background: #ffe7e7;
     color: #333;
-    padding: 20px 0;
+    padding: 15px 0;
     position: fixed;
     width: 100%;
     top: 0;
     z-index: 1000;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s;
 }
 
 .header-content {
@@ -34,9 +37,14 @@ header {
 }
 
 .logo {
-    height: 80px;
+    height: 60px;
     width: auto;
     max-width: 100%;
+}
+
+h1 {
+    font-size: 1.8em;
+    color: #555;
 }
 
 nav ul {
@@ -50,37 +58,43 @@ nav ul li {
 }
 
 nav ul li a {
-    color: #333;
+    color: #555;
     text-decoration: none;
-    transition: color 0.3s;
+    padding: 8px 15px;
+    border-radius: 5px;
+    transition: color 0.3s, background-color 0.3s;
 }
 
 nav ul li a:hover {
-    color: #b9cbe1;
+    color: #fff;
+    background-color: #b9cbe1;
 }
 
+/* Estilo del contenido principal */
 main {
-    padding-top: 100px;
+    padding-top: 90px;
     max-width: 1200px;
     margin: 0 auto;
 }
 
 section {
-    padding: 40px;
-    background-color: #b9cbe1;
-    margin: 20px 0;
-    border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    transition: background-color 0.3s, transform 0.3s;
+    padding: 30px;
+    background-color: #fff;
+    margin: 30px 0;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s, background-color 0.3s;
 }
 
 section:hover {
     transform: translateY(-3px);
-    background-color: #ffe7e7;
+    background-color: #f5f5f5;
 }
 
 h2 {
     margin-bottom: 20px;
+    color: #444;
+    font-size: 1.6em;
 }
 
 footer {
@@ -89,8 +103,10 @@ footer {
     background: #adb8d6;
     color: white;
     width: 100%;
+    margin-top: 40px;
 }
 
+/* Estilo de la galería */
 .gallery-container {
     display: flex;
     justify-content: center;
@@ -109,27 +125,33 @@ footer {
     height: auto;
     max-width: 800px;
     object-fit: cover;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
+/* Botón de bienvenida */
 .welcome-button {
-    position: absolute;
-    top: 20px;
+    position: fixed;
+    bottom: 20px;
     right: 20px;
     background-color: #b9cbe1;
     color: #333;
-    padding: 10px 15px;
-    border-radius: 5px;
+    padding: 12px 20px;
+    border-radius: 8px;
     cursor: pointer;
-    transition: background-color 0.3s;
+    transition: background-color 0.3s, transform 0.2s;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    font-size: 1em;
 }
 
 .welcome-button:hover {
     background-color: #ddd7e5;
+    transform: scale(1.05);
 }
 
 /* Media queries para diseño responsivo */
 
-/* Estilos para computadoras (pantallas grandes) */
+/* Computadoras (≥ 1025px) */
 @media (min-width: 1025px) {
     .header-content {
         flex-direction: row;
@@ -141,7 +163,7 @@ footer {
     }
 }
 
-/* Estilos para tablets */
+/* Tablets (≤ 1024px) */
 @media (max-width: 1024px) {
     .header-content {
         flex-direction: column;
@@ -161,15 +183,14 @@ footer {
     }
 
     .welcome-button {
-        top: auto;
-        bottom: 20px;
+        bottom: 15px;
     }
 }
 
-/* Estilos para móviles */
+/* Móviles (≤ 768px) */
 @media (max-width: 768px) {
     .logo {
-        height: 60px;
+        height: 50px;
     }
 
     h1 {
@@ -178,7 +199,7 @@ footer {
 
     section {
         padding: 20px;
-        margin: 10px 0;
+        margin: 15px 0;
     }
 
     .mySlides img {
@@ -196,7 +217,7 @@ footer {
     }
 
     .welcome-button {
-        padding: 8px 12px;
+        padding: 10px 16px;
         font-size: 0.9em;
     }
 }
