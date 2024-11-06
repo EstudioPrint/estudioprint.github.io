@@ -22,7 +22,7 @@
         </nav>
     </header>
 
-    <main>
+    <main style="padding-top: 120px;"> <!-- Añadido padding-top para no tapar contenido -->
         <section id="galeria">
             <div class="gallery-container">
                 <div class="mySlides">
@@ -76,8 +76,8 @@
             slides[slideIndex - 1].style.display = "block";  
             setTimeout(showSlides, 3000); // Cambia cada 3 segundos
         }
+    </script>
     <script>
-       <script>
         let lastScrollTop = 0; // Guarda la posición del último scroll
         const header = document.querySelector('header'); // Selecciona el header
         
@@ -95,6 +95,8 @@
             lastScrollTop = currentScroll <= 0 ? 0 : currentScroll; // Evita que el scroll negativo
         });
     </script>
+    
 </body>
 </html>
+
 
