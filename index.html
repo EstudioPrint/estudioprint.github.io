@@ -77,23 +77,24 @@
             setTimeout(showSlides, 3000); // Cambia cada 3 segundos
         }
     <script>
-    let lastScrollTop = 0; // Guarda la posición del último scroll
-    const header = document.querySelector('header'); // Selecciona el header
+       <script>
+        let lastScrollTop = 0; // Guarda la posición del último scroll
+        const header = document.querySelector('header'); // Selecciona el header
+        
+        window.addEventListener('scroll', function() {
+            let currentScroll = window.pageYOffset || document.documentElement.scrollTop;
     
-    window.addEventListener('scroll', function() {
-        let currentScroll = window.pageYOffset || document.documentElement.scrollTop;
-
-        if (currentScroll > lastScrollTop) {
-            // Si el usuario hace scroll hacia abajo, oculta el header
-            header.style.top = "-100px"; // Cambia el valor según el tamaño de tu header
-        } else {
-            // Si el usuario hace scroll hacia arriba, muestra el header
-            header.style.top = "0";
-        }
-
-        lastScrollTop = currentScroll <= 0 ? 0 : currentScroll; // Evita que el scroll negativo
-    });
-</script>
+            if (currentScroll > lastScrollTop) {
+                // Si el usuario hace scroll hacia abajo, oculta el header
+                header.style.top = "-100px"; // Cambia el valor según el tamaño de tu header
+            } else {
+                // Si el usuario hace scroll hacia arriba, muestra el header
+                header.style.top = "0";
+            }
+    
+            lastScrollTop = currentScroll <= 0 ? 0 : currentScroll; // Evita que el scroll negativo
+        });
+    </script>
 </body>
 </html>
 
