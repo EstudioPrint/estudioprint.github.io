@@ -254,3 +254,14 @@ footer {
 .price-item {
     margin: 5px 0;
 }
+
+/* Galería de imágenes */
+.mySlides {
+    display: none; /* Oculta todas las imágenes por defecto */
+}
+
+.mySlides img {
+    width: 100%; /* Asegura que las imágenes ocupen el 100% del contenedor */
+    height: auto;
+}
+
