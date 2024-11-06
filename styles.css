@@ -1,4 +1,4 @@
-/* Estilos generales */
+/* Estilos generales aplicables a todos los dispositivos */
 * {
     margin: 0;
     padding: 0;
@@ -129,8 +129,20 @@ footer {
 
 /* Media queries para diseño responsivo */
 
-/* Dispositivos medianos (tablets) */
-@media (max-width: 768px) {
+/* Estilos para computadoras (pantallas grandes) */
+@media (min-width: 1025px) {
+    .header-content {
+        flex-direction: row;
+        text-align: left;
+    }
+    
+    .gallery-container {
+        flex-direction: row;
+    }
+}
+
+/* Estilos para tablets */
+@media (max-width: 1024px) {
     .header-content {
         flex-direction: column;
         text-align: center;
@@ -154,8 +166,8 @@ footer {
     }
 }
 
-/* Dispositivos pequeños (celulares) */
-@media (max-width: 480px) {
+/* Estilos para móviles */
+@media (max-width: 768px) {
     .logo {
         height: 60px;
     }
