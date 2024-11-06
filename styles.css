@@ -222,3 +222,38 @@ footer {
         margin: 10px 0;
     }
 }
+
+/* Aquí estamos asegurándonos de que los elementos de precios estén ocultos por defecto */
+.hidden {
+    display: none;
+}
+
+/* El estilo de los botones para los servicios */
+.toggle-button {
+    background-color: #b9cbe1; /* Color principal de la página */
+    color: #333; /* Color de texto oscuro para buen contraste */
+    border: none;
+    padding: 10px 20px;
+    text-align: center;
+    display: inline-block;
+    font-size: 16px;
+    margin: 10px 0;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.toggle-button:hover {
+    background-color: #adb8d6; /* Un color más oscuro para el hover */
+}
+
+.price-list {
+    padding: 10px;
+    margin-top: 10px;
+    background-color: #f4f4f4;
+    border-radius: 5px;
+}
+
+.price-item {
+    margin: 5px 0;
+}
