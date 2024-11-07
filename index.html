@@ -169,5 +169,28 @@
 </section>
 
 <script src="rating.js"></script>
+
+<!-- Firebase SDK -->
+<script src="https://www.gstatic.com/firebasejs/9.13.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.13.0/firebase-firestore.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.13.0/firebase-auth.js"></script>
+
+<script>
+  const firebaseConfig = {
+    apiKey: "AIzaSyDY1gEN2lOinaSQfK2g0CmzRYCSQOiaIaE",
+    authDomain: "estudioprint-692ba.firebaseapp.com",
+    projectId: "estudioprint-692ba",
+    storageBucket: "estudioprint-692ba.firebasestorage.app",
+    messagingSenderId: "897968969107",
+    appId: "1:897968969107:web:ff6f1f0929f78d36d18466",
+    measurementId: "G-EEXSHDZN4C"
+  };
+
+  // Inicializar Firebase
+  const app = firebase.initializeApp(firebaseConfig);
+  const db = firebase.firestore();
+  const auth = firebase.auth();
+</script>
+
 </body>
 </html>
