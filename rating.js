@@ -3,19 +3,19 @@ document.addEventListener("DOMContentLoaded", function() {
     const commentInput = document.getElementById("rating-comment");
     const submitButton = document.getElementById("submit-rating");
     let selectedRating = 0;
-    const ADMIN_TOKEN = "CRISMORE2007"; // Token de administración
+    const ADMIN_TOKEN = "CRISMORE2007";
 
     // Recuperar los comentarios y valoraciones previas desde el localStorage
     let comments = JSON.parse(localStorage.getItem('comments')) || [];
-    let ratingData = JSON.parse(localStorage.getItem('ratingData')) || [0, 0, 0, 0, 0];
+    let ratingData = JSON.parse(localStorage.getItem('ratingData')) || [0, 0, 0, 0, 0];  // Asegurarnos de que el array esté inicializado correctamente
+    let hasRated = JSON.parse(localStorage.getItem('hasRated')) || false; // Para saber si el usuario ha valorado previamente
 
     // Verificar si el usuario ya ha enviado una valoración
-    if (localStorage.getItem('hasRated')) {
+    if (hasRated && comments.length > 0) {
         submitButton.disabled = true;
         alert("Ya has enviado una valoración.");
     }
 
-    // Resalta las estrellas según la calificación seleccionada
     stars.forEach((star, index) => {
         star.addEventListener("click", () => {
             selectedRating = index + 1;
@@ -46,6 +46,7 @@ document.addEventListener("DOMContentLoaded", function() {
             return;
         }
 
+        // Guardar el comentario y la valoración
         comments.push({
             name: userName,
             rating: selectedRating,
@@ -53,11 +54,11 @@ document.addEventListener("DOMContentLoaded", function() {
         });
 
         ratingData[selectedRating - 1] += 1;
-        renderChart();
+        updateChart(); // Actualizar el gráfico después de agregar una calificación
 
         localStorage.setItem('comments', JSON.stringify(comments));
         localStorage.setItem('ratingData', JSON.stringify(ratingData));
-        localStorage.setItem('hasRated', 'true');
+        localStorage.setItem('hasRated', JSON.stringify(true)); // Marcar como que el usuario ya ha valorado
 
         submitButton.disabled = true;
         selectedRating = 0;
@@ -67,11 +68,17 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 
     let chart;
-    function renderChart() {
+    function updateChart() {
         const ctx = document.getElementById("rating-chart").getContext("2d");
 
+        // Si no hay comentarios, asegurarnos de que el gráfico esté en cero
+        if (ratingData.every(val => val === 0)) {
+            // Si no hay valoraciones, asegurarnos de que los datos sean 0
+            ratingData = [0, 0, 0, 0, 0];
+        }
+
         if (chart) {
-            chart.destroy();
+            chart.destroy(); // Destruir el gráfico anterior
         }
 
         chart = new Chart(ctx, {
@@ -102,6 +109,11 @@ document.addEventListener("DOMContentLoaded", function() {
         const commentsList = document.getElementById("comments-list");
         commentsList.innerHTML = "";
 
+        // Si no hay comentarios, todos los usuarios pueden escribir.
+        if (comments.length === 0) {
+            submitButton.disabled = false;  // Habilitar el botón para que puedan escribir
+        }
+
         comments.forEach((comment, index) => {
             const commentItem = document.createElement("li");
             commentItem.classList.add("comment-item");
@@ -123,9 +135,15 @@ document.addEventListener("DOMContentLoaded", function() {
             deleteButton.addEventListener("click", () => {
                 const enteredToken = prompt("Ingresa el token de administración para eliminar el comentario:");
                 if (enteredToken === ADMIN_TOKEN) {
-                    comments.splice(index, 1); // Elimina el comentario de la lista de comentarios
-                    localStorage.setItem('comments', JSON.stringify(comments)); // Actualiza localStorage
+                    ratingData[comment.rating - 1] -= 1; // Actualizar la calificación en ratingData
+                    comments.splice(index, 1);
+                    localStorage.setItem('comments', JSON.stringify(comments));
+                    localStorage.setItem('ratingData', JSON.stringify(ratingData));
                     renderComments();
+                    updateChart(); // Actualizar el gráfico después de eliminar una calificación
+
+                    // Permitir al usuario volver a escribir su comentario si lo ha eliminado
+                    localStorage.setItem('hasRated', JSON.stringify(false));
                 } else {
                     alert("Token incorrecto. No tienes permiso para eliminar este comentario.");
                 }
@@ -140,7 +158,11 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     }
 
-    renderChart();
+    // Inicializar el gráfico y los comentarios al cargar la página
+    updateChart();
+    if (ratingData.every(val => val === 0)) {
+        ratingData = [0, 0, 0, 0, 0]; // Asegurarnos de que el gráfico empiece con valores cero
+    }    
     renderComments();
 });
 
