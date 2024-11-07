@@ -265,3 +265,154 @@ footer {
     height: auto;
 }
 
+/* Estilos para la sección de valoración */
+#rating-section {
+    background-color: #ffe7e7; /* Fondo acorde a los colores empresariales */
+    border-radius: 8px;
+    padding: 20px;
+    margin: 20px 0;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    max-width: 600px;
+    margin: 20px auto;
+}
+
+#rating-section h2 {
+    color: #333;
+    font-size: 1.6em;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+/* Estrellas de valoración */
+#rating-stars {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.star {
+    font-size: 2em;
+    color: #b9cbe1;
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+.star:hover,
+.star.selected {
+    color: #adb8d6;
+}
+
+/* Caja de comentarios */
+#rating-comment {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #b9cbe1;
+    resize: none;
+    font-size: 1em;
+    margin-top: 10px;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+#submit-rating {
+    background-color: #b9cbe1;
+    color: #333;
+    border: none;
+    padding: 10px 15px;
+    margin-top: 15px;
+    border-radius: 5px;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    display: block;
+    margin: 15px auto 0;
+}
+
+#submit-rating:hover {
+    background-color: #adb8d6;
+}
+
+/* Sección del gráfico compacto */
+#rating-summary {
+    background-color: #fffbf2;
+    border-radius: 8px;
+    padding: 20px;
+    margin: 20px 0;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    max-width: 600px;
+    margin: 20px auto;
+    text-align: center;
+}
+
+#rating-summary h2 {
+    color: #333;
+    font-size: 1.6em;
+    margin-bottom: 10px;
+}
+
+/* Gráfico */
+#rating-chart {
+    width: 100%;
+    max-height: 250px;
+    margin: 0 auto;
+}
+/* Sección de comentarios publicados */
+#published-comments {
+    margin-top: 20px;
+}
+
+#published-comments h3 {
+    color: #333;
+    font-size: 1.4em;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+#comments-list {
+    list-style: none;
+    padding: 0;
+}
+
+.comment-item {
+    background-color: #fffbf2;
+    border-radius: 8px;
+    padding: 15px;
+    margin: 10px 0;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+}
+
+.comment-item h4 {
+    margin: 0 0 5px;
+    font-weight: bold;
+    color: #555;
+}
+
+.comment-item .comment-stars {
+    color: #adb8d6;
+    margin: 5px 0;
+}
+
+.comment-item p {
+    margin: 5px 0 0;
+    color: #333;
+}
+
+/* Estilo básico para las estrellas */
+.star {
+    font-size: 2em;
+    color: #ccc; /* Color gris claro por defecto */
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+/* Estilo para las estrellas seleccionadas */
+.star.selected {
+    color: #ffcc00; /* Color amarillo para las estrellas seleccionadas */
+}
+
+/* Estilo para las estrellas al pasar el mouse (hover) */
+.star:hover {
+    color: #ffcc00; /* Amarillo al pasar el ratón */
+}
+
