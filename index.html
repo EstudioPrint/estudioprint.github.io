@@ -6,6 +6,13 @@
     <link rel="stylesheet" href="styles.css">
     <title>Estudio Print</title>
 </head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Estudio Print</title>
+<link rel="stylesheet" href="styles.css">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
 <body>
     <header>
         <div class="header-content">
@@ -133,5 +140,34 @@
     
     
     
+</body>
+</html>
+
+<section id="rating-section">
+    <h2>Valora nuestro servicio</h2>
+    <div id="rating-stars">
+        <span class="star">&#9733;</span>
+        <span class="star">&#9733;</span>
+        <span class="star">&#9733;</span>
+        <span class="star">&#9733;</span>
+        <span class="star">&#9733;</span>
+    </div>
+    
+    </div>
+    <textarea id="rating-comment" placeholder="Deja un comentario..."></textarea>
+    <button id="submit-rating">Enviar valoración</button>
+    <div id="published-comments">
+        <h3>Comentarios de usuarios:</h3>
+        <ul id="comments-list"></ul>
+    </div>
+    
+</section>
+
+<section id="rating-summary">
+    <h2>Resumen de Valoraciones</h2>
+    <canvas id="rating-chart"></canvas>
+</section>
+
+<script src="rating.js"></script>
 </body>
 </html>
