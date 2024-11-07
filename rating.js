@@ -5,36 +5,15 @@ document.addEventListener("DOMContentLoaded", function() {
     let selectedRating = 0;
     const ADMIN_TOKEN = "CRISMORE2007";
 
-    // Recuperar comentarios y valoraciones desde Firebase
-    const db = firebase.firestore();
-    const commentsRef = db.collection("comments");
-    const ratingDataRef = db.collection("ratingData").doc("ratings");
-    const usersRef = db.collection("users");  // Nueva colección para gestionar usuarios
-
-    let ratingData = [0, 0, 0, 0, 0];  // Inicializar la estructura de ratingData
+    // Recuperar los comentarios y valoraciones previas desde el localStorage
+    let comments = JSON.parse(localStorage.getItem('comments')) || [];
+    let ratingData = JSON.parse(localStorage.getItem('ratingData')) || [0, 0, 0, 0, 0];
 
     // Verificar si el usuario ya ha enviado una valoración
-    const userName = prompt("Ingresa tu nombre:");
-    if (!userName) {
-        alert("Por favor, ingresa tu nombre.");
-        return;
+    if (localStorage.getItem('hasRated')) {
+        submitButton.disabled = true;
+        alert("Ya has enviado una valoración.");
     }
-
-    // Verificar si el usuario ha valorado previamente
-    usersRef.doc(userName).get().then(doc => {
-        if (doc.exists && doc.data().hasRated) {
-            submitButton.disabled = true;
-            alert("Ya has enviado una valoración.");
-        }
-    });
-
-    // Obtener los datos de las valoraciones almacenadas
-    ratingDataRef.get().then(doc => {
-        if (doc.exists) {
-            ratingData = doc.data().ratings;
-            updateChart();  // Actualizar el gráfico
-        }
-    });
 
     stars.forEach((star, index) => {
         star.addEventListener("click", () => {
@@ -60,33 +39,31 @@ document.addEventListener("DOMContentLoaded", function() {
         }
 
         const comment = commentInput.value;
+        const userName = prompt("Ingresa tu nombre:");
+        if (!userName) {
+            alert("Por favor, ingresa tu nombre.");
+            return;
+        }
 
-        // Guardar el comentario y la valoración en Firebase
-        commentsRef.add({
-            userName: userName,
+        // Guardar el comentario y la valoración
+        comments.push({
+            name: userName,
             rating: selectedRating,
-            text: comment,
-            timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-            hasRated: true
+            text: comment
         });
 
-        // Actualizar la calificación en ratingData
         ratingData[selectedRating - 1] += 1;
-        ratingDataRef.set({ ratings: ratingData });
+        updateChart(); // Actualizar el gráfico después de agregar una calificación
 
-        // Marcar que el usuario ha enviado una valoración
-        usersRef.doc(userName).set({
-            hasRated: true
-        });
-
-        // Actualizar gráfico
-        updateChart();
+        localStorage.setItem('comments', JSON.stringify(comments));
+        localStorage.setItem('ratingData', JSON.stringify(ratingData));
+        localStorage.setItem('hasRated', 'true');
 
         submitButton.disabled = true;
         selectedRating = 0;
         commentInput.value = "";
         updateStarSelection();
-        renderComments();  // Volver a cargar los comentarios
+        renderComments();
     });
 
     let chart;
@@ -125,55 +102,44 @@ document.addEventListener("DOMContentLoaded", function() {
         const commentsList = document.getElementById("comments-list");
         commentsList.innerHTML = "";
 
-        commentsRef.orderBy("timestamp", "desc").get().then(snapshot => {
-            snapshot.forEach(doc => {
-                const comment = doc.data();
-                const commentItem = document.createElement("li");
-                commentItem.classList.add("comment-item");
+        comments.forEach((comment, index) => {
+            const commentItem = document.createElement("li");
+            commentItem.classList.add("comment-item");
 
-                const userName = document.createElement("h4");
-                userName.textContent = comment.userName;
+            const userName = document.createElement("h4");
+            userName.textContent = comment.name;
 
-                const stars = document.createElement("div");
-                stars.classList.add("comment-stars");
-                stars.textContent = "★".repeat(comment.rating) + "☆".repeat(5 - comment.rating);
+            const stars = document.createElement("div");
+            stars.classList.add("comment-stars");
+            stars.textContent = "★".repeat(comment.rating) + "☆".repeat(5 - comment.rating);
 
-                const userComment = document.createElement("p");
-                userComment.textContent = comment.text;
+            const userComment = document.createElement("p");
+            userComment.textContent = comment.text;
 
-                const deleteButton = document.createElement("button");
-                deleteButton.textContent = "Eliminar";
-                deleteButton.classList.add("delete-button");
+            const deleteButton = document.createElement("button");
+            deleteButton.textContent = "Eliminar";
+            deleteButton.classList.add("delete-button");
 
-                deleteButton.addEventListener("click", () => {
-                    const enteredToken = prompt("Ingresa el token de administración para eliminar el comentario:");
-                    if (enteredToken === ADMIN_TOKEN) {
-                        commentsRef.doc(doc.id).delete().then(() => {
-                            ratingData[comment.rating - 1] -= 1;
-                            ratingDataRef.set({ ratings: ratingData });
-
-                            // Marcar que el usuario puede votar nuevamente
-                            usersRef.doc(comment.userName).set({
-                                hasRated: false
-                            });
-
-                            renderComments();
-                            updateChart();  // Actualizar gráfico después de eliminar comentario
-                        }).catch(error => {
-                            console.error("Error al eliminar comentario: ", error);
-                        });
-                    } else {
-                        alert("Token incorrecto. No tienes permiso para eliminar este comentario.");
-                    }
-                });
-
-                commentItem.appendChild(userName);
-                commentItem.appendChild(stars);
-                commentItem.appendChild(userComment);
-                commentItem.appendChild(deleteButton);
-
-                commentsList.appendChild(commentItem);
+            deleteButton.addEventListener("click", () => {
+                const enteredToken = prompt("Ingresa el token de administración para eliminar el comentario:");
+                if (enteredToken === ADMIN_TOKEN) {
+                    ratingData[comment.rating - 1] -= 1; // Actualizar la calificación en ratingData
+                    comments.splice(index, 1);
+                    localStorage.setItem('comments', JSON.stringify(comments));
+                    localStorage.setItem('ratingData', JSON.stringify(ratingData));
+                    renderComments();
+                    updateChart(); // Actualizar el gráfico después de eliminar una calificación
+                } else {
+                    alert("Token incorrecto. No tienes permiso para eliminar este comentario.");
+                }
             });
+
+            commentItem.appendChild(userName);
+            commentItem.appendChild(stars);
+            commentItem.appendChild(userComment);
+            commentItem.appendChild(deleteButton);
+
+            commentsList.appendChild(commentItem);
         });
     }
 
