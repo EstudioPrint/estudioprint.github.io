@@ -159,8 +159,7 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     // Inicializar el gráfico y los comentarios al cargar la página
-    updateChart();
-    if (ratingData.every(val => val === 0)) {
+    updateChart();if (ratingData.every(val => val === 0)) {
         ratingData = [0, 0, 0, 0, 0]; // Asegurarnos de que el gráfico empiece con valores cero
     }    
     renderComments();
