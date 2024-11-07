@@ -165,6 +165,111 @@ document.addEventListener("DOMContentLoaded", function() {
     renderComments();
 });
 
+// Configura la URL y las claves de la API de Supabase
+const supabaseUrl = 'https://phndzfuiwmmpbzllyjrp.supabase.co';  // Asegúrate de que la URL sea correcta
+const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBobmR6ZnVpd21tcGJ6bGx5anJwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzA5NTE4NzAsImV4cCI6MjA0NjUyNzg3MH0.Mdf8Qvj-XwANZ0rMcuH1oNSHDremSVAe6--JV-capLg';  // Reemplaza con tu propia clave
+
+// Crear cliente Supabase
+const supabase = Supabase.createClient(supabaseUrl, supabaseKey);
+
+// Estrellas seleccionadas
+const stars = document.querySelectorAll("#rating-stars .star");
+let selectedRating = 0;
+
+// Manejo de la selección de estrellas
+stars.forEach((star, index) => {
+  star.addEventListener("click", () => {
+    selectedRating = index + 1;
+    updateStarSelection();
+  });
+});
+
+function updateStarSelection() {
+  stars.forEach((star, index) => {
+    if (index < selectedRating) {
+      star.classList.add("selected");
+    } else {
+      star.classList.remove("selected");
+    }
+  });
+}
+
+// Enviar la valoración
+const submitButton = document.getElementById("submit-rating");
+const commentInput = document.getElementById("rating-comment");
+
+submitButton.addEventListener("click", async () => {
+  if (selectedRating === 0) {
+    alert("Por favor, selecciona una calificación.");
+    return;
+  }
+
+  const comment = commentInput.value;
+  const userName = prompt("Ingresa tu nombre:");
+  if (!userName) {
+    alert("Por favor, ingresa tu nombre.");
+    return;
+  }
+
+  const { data, error } = await supabase
+    .from('valoraciones')
+    .insert([
+      { name: userName, rating: selectedRating, text: comment }
+    ]);
+
+  if (error) {
+    alert("Hubo un error al guardar tu valoración. Intenta de nuevo.");
+  } else {
+    alert("Valoración guardada correctamente.");
+    commentInput.value = "";
+    selectedRating = 0;
+    updateStarSelection();
+    fetchComments(); // Recarga los comentarios después de agregar uno nuevo
+  }
+});
+
+// Mostrar los comentarios
+async function fetchComments() {
+  let { data: comments, error } = await supabase
+    .from('valoraciones')
+    .select('*')
+    .order('created_at', { ascending: false });  // Ordena de más reciente a más antiguo
+
+  if (error) {
+    console.error('Error al cargar comentarios:', error);
+  } else {
+    renderComments(comments);
+  }
+}
+
+function renderComments(comments) {
+  const commentsList = document.getElementById("comments-list");
+  commentsList.innerHTML = "";  // Limpiar lista de comentarios
+
+  comments.forEach((comment) => {
+    const commentItem = document.createElement("li");
+    commentItem.classList.add("comment-item");
+
+    const userName = document.createElement("h4");
+    userName.textContent = comment.name;
+
+    const stars = document.createElement("div");
+    stars.classList.add("comment-stars");
+    stars.textContent = "★".repeat(comment.rating) + "☆".repeat(5 - comment.rating);
+
+    const userComment = document.createElement("p");
+    userComment.textContent = comment.text;
+
+    commentItem.appendChild(userName);
+    commentItem.appendChild(stars);
+    commentItem.appendChild(userComment);
+
+    commentsList.appendChild(commentItem);
+  });
+}
+
+fetchComments();  // Llamada inicial para cargar los comentarios
+
 
 
 
